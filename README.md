@@ -17,7 +17,7 @@ Build Instructions
 clone me, then:
 
 ``` sh
-g++ -c -g -fPIC geometry.cpp -o geometry.o
+g++ -c -fPIC geometry.cpp -o geometry.o
 g++ -shared -Wl,-soname,libgeometry.so -o libgeometry.so  geometry.o
 ```
 

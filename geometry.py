@@ -32,11 +32,13 @@ class Geometry(object):
 
 
     def test(self):
-        print "sphere_distance1:", self.sphere_distance1(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
-        print "sphere_distance2:", self.sphere_distance2(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
-        print "sphere_distance3:", self.sphere_distance3(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
+        print "sphere_distance1:", self.sphere_distance1(33.94352, -118.40866, 39.850017, -104.673915, 6371/4 )
+        print "sphere_distance2:", self.sphere_distance2(33.94352, -118.40866, 39.850017, -104.673915, 6371/4)
+        print "sphere_distance3:", self.sphere_distance3(33.94352, -118.40866, 39.850017, -104.673915, 6371/4)
+
+
         print "polygon_contains_point_2d", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [-1,-1]);
-        print "polygon_contains_point_2:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1]);
+        print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1]);
         print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [3,3]);
         print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [5,5]);
 

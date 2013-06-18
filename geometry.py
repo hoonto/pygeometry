@@ -31,14 +31,14 @@ class Geometry(object):
         return lib.py_polygon_contains_point_2d_2 (c_int(n), pn, p1)
 
 
+    def test(self):
+        print "sphere_distance1:", self.sphere_distance1(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
+        print "sphere_distance2:", self.sphere_distance2(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
+        print "sphere_distance3:", self.sphere_distance3(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
+        print "polygon_contains_point_2d", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [-1,-1]);
+        print "polygon_contains_point_2:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1]);
+        print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [3,3]);
+        print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [5,5]);
+
 g = Geometry()
-print g.sphere_distance1(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
-print g.sphere_distance2(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
-print g.sphere_distance3(40.643778999999990000, -73.781993000000000000, 33.945293800000000000, -118.385562699999980000, 3963.1676)
-print g.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [-1,-1]);
-print g.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1]);
-print g.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [3,3]);
-print g.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [5,5]);
-print g.polygon_contains_point_2d_2([0,0,0,4,4,4,4,0], [-1,-1]);
-print g.polygon_contains_point_2d_2([0,0,0,4,4,4,4,0], [3,3]);
-print g.polygon_contains_point_2d_2([0,0,0,4,4,4,4,0], [5,5]);
+g.test()

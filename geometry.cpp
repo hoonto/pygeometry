@@ -33206,11 +33206,12 @@ double sphere_distance2 ( double lat1, double lon1, double lat2, double lon2,
 
   s = pow ( sin ( ( lat1 - lat2 ) / 2.0 ), 2 )
     + cos ( lat1 ) * cos ( lat2 ) * pow ( sin ( ( lon1 - lon2 ) / 2.0 ), 2 );
-  s = sqrt ( s );
 
+  s = sqrt ( s );
   dist = 2.0 * r * asin ( s );
 
   return dist;
+
 }
 //****************************************************************************80
 

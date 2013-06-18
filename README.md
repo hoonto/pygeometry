@@ -1,0 +1,4 @@
+pygeometry
+==========
+
+Python Geometry Library

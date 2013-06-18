@@ -1,0 +1,56 @@
+         8004 function calls in 0.062 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.062    0.062 <string>:1(<module>)
+     2000    0.011    0.000    0.011    0.000 geometry.py:15(sphere_distance1)
+     2000    0.033    0.000    0.039    0.000 geometry.py:24(polygon_contains_point_2d)
+        1    0.011    0.011    0.062    0.062 geometry.py:37(test)
+     4000    0.006    0.000    0.006    0.000 {len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 {range}
+
+
+         80004 function calls in 0.603 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.603    0.603 <string>:1(<module>)
+    20000    0.103    0.000    0.103    0.000 geometry.py:15(sphere_distance1)
+    20000    0.321    0.000    0.383    0.000 geometry.py:24(polygon_contains_point_2d)
+        1    0.115    0.115    0.603    0.603 geometry.py:37(test)
+    40000    0.062    0.000    0.062    0.000 {len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.001    0.001    0.001    0.001 {range}
+
+
+         120004 function calls in 0.905 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    0.905    0.905 <string>:1(<module>)
+    30000    0.155    0.000    0.155    0.000 geometry.py:15(sphere_distance1)
+    30000    0.482    0.000    0.574    0.000 geometry.py:24(polygon_contains_point_2d)
+        1    0.174    0.174    0.905    0.905 geometry.py:37(test)
+    60000    0.093    0.000    0.093    0.000 {len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.001    0.001    0.001    0.001 {range}
+
+
+         160004 function calls in 1.198 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    1.198    1.198 <string>:1(<module>)
+    40000    0.205    0.000    0.205    0.000 geometry.py:15(sphere_distance1)
+    40000    0.636    0.000    0.761    0.000 geometry.py:24(polygon_contains_point_2d)
+        1    0.230    0.230    1.197    1.197 geometry.py:37(test)
+    80000    0.125    0.000    0.125    0.000 {len}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.001    0.001    0.001    0.001 {range}
+
+

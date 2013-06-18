@@ -1,3 +1,6 @@
+# Profiling:
+import cProfile
+
 from ctypes import *
 lib = cdll.LoadLibrary('./libgeometry.so')
 
@@ -31,19 +34,42 @@ class Geometry():
         return lib.py_polygon_contains_point_2d_2 (c_int(n), pn, p1)
 
 
-    def test(self):
+def test(numtests):
+    g = Geometry()
 
-        toradians = 0.0174532925;
+    toradians = 0.0174532925;
 
-        print "sphere_distance1:", self.sphere_distance1(39.7391500 * toradians, -104.9847000 * toradians, 34.0522300 * toradians, -118.2436800 * toradians, 6371)
-        print "sphere_distance2:", self.sphere_distance2(39.7391500 * toradians, -104.9847000 * toradians, 34.0522300 * toradians, -118.2436800 * toradians, 6371)
-        print "sphere_distance3:", self.sphere_distance3(39.7391500 * toradians, -104.9847000 * toradians, 34.0522300 * toradians, -118.2436800 * toradians, 6371)
+    trange = range(0,numtests)
+
+    for t in trange:
+        g.sphere_distance1(39.7391500 * toradians, -104.9847000 * toradians, 34.0522300 * toradians, -118.2436800 * toradians, 6371)
+        g.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1])
+
+        ####
+        # The distance methods, you can try different distance algorithms
+        # and see what if any effect there is on the test results:
+        #g.sphere_distance2(39.7391500 * toradians, -104.9847000 * toradians, 34.0522300 * toradians, -118.2436800 * toradians, 6371)
+        #g.sphere_distance3(39.7391500 * toradians, -104.9847000 * toradians, 34.0522300 * toradians, -118.2436800 * toradians, 6371)
+        ##
 
 
-        print "polygon_contains_point_2d", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [-1,-1]);
-        print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1]);
-        print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [3,3]);
-        print "polygon_contains_point_2d:", self.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [5,5]);
+# 2000 calls to a sphere_distance1
+# and 2000 calls to polygon_contains_point_2d
+# = 4000 calls total
+cProfile.run('test(2000)')      # ~0.062 seconds on 64bit fedora
 
-g = Geometry()
-g.test()
+# 20000 calls to a sphere_distance1
+# and 20000 calls to polygon_contains_point_2d
+# = 40000 calls total
+cProfile.run('test(20000)')     # ~0.603 seconds on 64bit fedora
+
+# 30000 calls to a sphere_distance1
+# and 30000 calls to polygon_contains_point_2d
+# = 60000 calls total
+cProfile.run('test(30000)')     # ~0.905 seconds on 64bit fedora
+
+# 40000 calls to a sphere_distance1
+# and 40000 calls to polygon_contains_point_2d
+# = 80000 calls total
+cProfile.run('test(40000)')     # ~1.198 seconds on 64bit fedora
+

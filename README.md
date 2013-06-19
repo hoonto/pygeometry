@@ -1,9 +1,11 @@
-pygeometry
+PyGEOMETRY
 ==========
 
 Python Geometry Library
 
-Python bridge to this excellent library: http://people.sc.fsu.edu/~jburkardt/cpp_src/geometry/geometry.html
+Python bridge to this excellent library: 
+
+http://people.sc.fsu.edu/~jburkardt/c_src/geometry/geometry.html
 
 only provides the functions described in the geometryexterns.hpp file so far.
 
@@ -17,8 +19,8 @@ Build Instructions
 clone me, then:
 
 ``` sh
-g++ -c -fPIC geometry.cpp -o geometry.o
-g++ -shared -Wl,-soname,libgeometry.so -o libgeometry.so  geometry.o
+gcc -c -fPIC geometry.cpp -o geometry.o
+gcc -shared -Wl,-soname,libgeometry.so -o libgeometry.so  geometry.o
 ```
 
 Then you can do: 
@@ -26,6 +28,12 @@ Then you can do:
 ``` sh
 python geometry.py
 ```
+
+
+Notes
+=====
+
+Switched to using the C version of GEOMETRY so that we don't have to write externs
 
 
 

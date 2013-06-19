@@ -4,34 +4,34 @@ import cProfile
 from ctypes import *
 lib = cdll.LoadLibrary('./libgeometry.so')
 
-lib.sphere_distance1.restype = c_double
-lib.sphere_distance2.restype = c_double
-lib.sphere_distance3.restype = c_double
-lib.polygon_contains_point_2d.restype = c_bool
-lib.polygon_contains_point_2d_2.restype = c_bool
+lib.py_sphere_distance1.restype = c_double
+lib.py_sphere_distance2.restype = c_double
+lib.py_sphere_distance3.restype = c_double
+lib.py_polygon_contains_point_2d.restype = c_bool
+lib.py_polygon_contains_point_2d_2.restype = c_bool
 
 class Geometry():
 
     def sphere_distance1(self, lat1, lon1, lat2, lon2, r):
-        return lib.sphere_distance1(c_double(lat1), c_double(lon1), c_double(lat2), c_double(lon2), c_double(r)) 
+        return lib.py_sphere_distance1(c_double(lat1), c_double(lon1), c_double(lat2), c_double(lon2), c_double(r)) 
 
     def sphere_distance2(self, lat1, lon1, lat2, lon2, r):
-        return lib.sphere_distance2(c_double(lat1), c_double(lon1), c_double(lat2), c_double(lon2), c_double(r))
+        return lib.py_sphere_distance2(c_double(lat1), c_double(lon1), c_double(lat2), c_double(lon2), c_double(r))
 
     def sphere_distance3(self, lat1, lon1, lat2, lon2, r):
-        return lib.sphere_distance3(c_double(lat1), c_double(lon1), c_double(lat2), c_double(lon2), c_double(r))
+        return lib.py_sphere_distance3(c_double(lat1), c_double(lon1), c_double(lat2), c_double(lon2), c_double(r))
 
     def polygon_contains_point_2d(self, v, p):
         n = len(v)
         p1 = (c_double * 2)(*p)
         pn = (c_double * len(v))(*v)
-        return lib.polygon_contains_point_2d (c_int(n), pn, p1)
+        return lib.py_polygon_contains_point_2d (c_int(n), pn, p1)
 
     def polygon_contains_point_2d_2(self, v, p):
         n = len(v)
         p1 = (c_double * 2)(*p)
         pn = (c_double * len(v))(*v)
-        return lib.polygon_contains_point_2d_2 (c_int(n), pn, p1)
+        return lib.py_polygon_contains_point_2d_2 (c_int(n), pn, p1)
 
 
 def test(numtests):

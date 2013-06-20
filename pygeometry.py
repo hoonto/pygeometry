@@ -595,17 +595,23 @@ lib.sphere_distance3.restype = c_double
 class Geometry():
 
     # void angle_box_2d ( double dist, double p1[2], double p2[2], double p3[2], double p4[2], double p5[2] );
-    def angle_box_2d ( dist, p1, p2, p3, p4, p5 ):
+    def angle_box_2d ( self, dist, p1, p2, p3, p4, p5 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p3)
         cp4 = (c_double * 2)(*p4)
         cp5 = (c_double * 2)(*p5)
+        pcp4 = pointer(cp4);
+        pcp5 = pointer(cp5);
         # MLM: cp4 and cp5 are returned
-        lib.angle_box_2d(c_double(dist), cp1, cp2, cp3, cp4, cp5)
+        lib.angle_box_2d(c_double(dist), cp1, cp2, cp3, pcp4, pcp5)
+        p4.append(pcp4.contents[0]);
+        p4.append(pcp4.contents[1]);
+        p5.append(pcp5.contents[0]);
+        p5.append(pcp5.contents[1]);
 
     # int angle_contains_ray_2d ( double p1[2], double p2[2], double p3[2], double p[2] );
-    def angle_contains_ray_2d ( p1, p2, p3, p):
+    def angle_contains_ray_2d ( self, p1, p2, p3, p):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p3)
@@ -613,111 +619,111 @@ class Geometry():
         return lib.angle_contains_ray_2d(cp1, cp2, cp3, cp)
 
     # double angle_deg_2d ( double p1[2], double p2[2], double p3[2] );
-    def angle_deg_2d ( p1, p2, p3 ):
+    def angle_deg_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.angle_deg_2d ( p1, p2, p3 )
 
     # double *angle_half_2d ( double p1[2], double p2[2], double p3[2] );
-    def angle_half_2d ( p1, p2, p3 ):
+    def angle_half_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.angle_half_2d( p1, p2, p3 )
 
     # double angle_rad_2d ( double p1[2], double p2[2], double p3[2] );
-    def angle_rad_2d ( p1, p2, p3 ):
+    def angle_rad_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.angle_rad_2d( p1, p2, p3 )
 
     # double angle_rad_3d ( double p1[3], double p2[3], double p3[3] );
-    def angle_rad_3d ( p1, p2, p3 ):
+    def angle_rad_3d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.angle_rad_3d( p1, p2, p3 )
 
     # double angle_rad_nd ( int dim_num, double vec1[], double vec2[] );
-    def angle_rad_nd ( dim_num, vec1, vec2 ):
+    def angle_rad_nd (self,  dim_num, vec1, vec2 ):
         cvec1 = (c_double * len(vec1))(*vec1)
         cvec2 = (c_double * len(vec2))(*vec2)
         return lib.angle_rad_nd(c_int(dim_num), cvec1, cvec2)
 
     # double angle_turn_2d ( double p1[2], double p2[2], double p3[2] );
-    def angle_turn_2d ( p1, p2, p3 ):
+    def angle_turn_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.angle_turn_2d( p1, p2, p3 )
 
     # double anglei_deg_2d ( double p1[2], double p2[2], double p3[2] );
-    def anglei_deg_2d ( p1, p2, p3 ):
+    def anglei_deg_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.anglei_deg_2d( p1, p2, p3 )
 
     # double anglei_rad_2d ( double p1[2], double p2[2], double p3[2] );
-    def anglei_rad_2d ( p1, p2, p3 ):
+    def anglei_rad_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
         return lib.angle_rad_2d( p1, p2, p3 )
 
     #double annulus_area_2d ( double r1, double r2 );
-    def annulus_area_2d ( r1, r2 ):
+    def annulus_area_2d (self,  r1, r2 ):
         return lib.annulus_area_2d(c_double(r1),c_double(r2))
 
     # double annulus_sector_area_2d ( double r1, double r2, double theta1, double theta2 );
-    def annulus_sector_area_2d ( r1, r2, theta1, theta2 ):
+    def annulus_sector_area_2d (self,  r1, r2, theta1, theta2 ):
         return lib.annulus_sector_area_2d(c_double(r1),c_double(r2),c_double(theta1),c_double(theta2))
 
     # double *annulus_sector_centroid_2d ( double pc[2], double r1, double r2, double theta1, double theta2 );
-    def annulus_sector_centroid_2d ( pc, r1, r2, theta1, theta2 ):
+    def annulus_sector_centroid_2d (self,  pc, r1, r2, theta1, theta2 ):
         cpc = (c_double * 2)(*pc)
-        return lib.annulus_sector_centroid_2d(cpc, c_double(r1), c_double(r2), c_double(theta1), c_double(theta2))
+        return lib.annulus_sector_centroid_2d(self, cpc, c_double(r1), c_double(r2), c_double(theta1), c_double(theta2))
 
     # double *ball_unit_sample_2d ( int *seed );
-    def ball_unit_sample_2d (seed ):
+    def ball_unit_sample_2d (self, seed ):
         return lib.ball_unit_sample_2d(c_int_p(seed))
 
     # double *ball_unit_sample_3d ( int *seed );
-    def ball_unit_sample_3d ( seed ):
+    def ball_unit_sample_3d (self, seed ):
         return lib.ball_unit_sample_3d(c_int_p(seed))
 
     # double *ball_unit_sample_nd ( int dim_num, int *seed );
-    def ball_unit_sample_nd ( dim_num, seed ):
+    def ball_unit_sample_nd (self, dim_num, seed ):
         return lib.ball_unit_sample_nd(c_int(dim_num), c_int_p(seed))
 
     # double *basis_map_3d ( double u[3*3], double v[3*3] );
-    def basis_map_3d ( u, v ):
+    def basis_map_3d (self, u, v ):
         cu = (c_double * 3*3)(*u)
         cv = (c_double * 3*3)(*v)
         return lib.basis_map_3d(cu, cv)
 
     # int box_01_contains_point_2d ( double p[2] );
-    def box_01_contains_point_2d ( p ):
+    def box_01_contains_point_2d (self, p ):
         cp = (c_double * 2)(*p)
         return lib.box_01_contains_point_2d ( cp )
 
 
     # int box_01_contains_point_nd ( int dim_num, double p[] );
-    def box_01_contains_point_nd ( dim_num, p ):
+    def box_01_contains_point_nd (self, dim_num, p ):
         cp = (c_double * len(p))(*p)
         return lib.box_01_contains_point_nd(c_int(dim_num), cp)
 
     # int box_contains_point_2d ( double p1[2], double p2[2], double p[2] );
-    def box_contains_point_2d ( p1, p2, p ):
+    def box_contains_point_2d (self, p1, p2, p ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp = (c_double * 2)(*p)
         return lib.box_contains_point_2d( p1, p2, p )
 
     # int box_contains_point_nd ( int dim_num, double p1[], double p2[], double p[] );
-    def box_contains_point_nd ( dim_num, p1, p2, p ):
+    def box_contains_point_nd (self, dim_num, p1, p2, p ):
         cp1 = (c_double * len(p1))(*p1)
         cp2 = (c_double * len(p2))(*p2)
         cp = (c_double * len(p))(*p)
@@ -725,7 +731,7 @@ class Geometry():
 
 
     # void box_ray_int_2d ( double p1[2], double p2[2], double pa[2], double pb[2], double pint[2] );
-    def box_ray_int_2d ( p1, p2, pa, pb, pint ):
+    def box_ray_int_2d (self, p1, p2, pa, pb, pint ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cpa = (c_double * 2)(*pa)
@@ -734,7 +740,7 @@ class Geometry():
         return lib.box_ray_int_2d(cp1, cp2, cpa, cpb, cpint) 
 
     # int box_segment_clip_2d ( double p1[2], double p2[2], double pa[2], double pb[2] );
-    def box_segment_clip_2d ( p1, p2, pa, pb ):
+    def box_segment_clip_2d (self, p1, p2, pa, pb ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cpa = (c_double * 2)(*pa)
@@ -743,7 +749,7 @@ class Geometry():
 
 
     # void circle_arc_point_near_2d ( double r, double pc[2], double theta1, double theta2, double p[2], double pn[2], double *dist );
-    def circle_arc_point_near_2d ( r, pc, theta1, theta2, p, pn, dist ):
+    def circle_arc_point_near_2d (self, r, pc, theta1, theta2, p, pn, dist ):
         cpc = (c_double * 2)(*pc)
         cp = (c_double * 2)(*p)
         cpn = (c_double * 2)(*pn)
@@ -756,12 +762,12 @@ class Geometry():
 
 
     #double circle_area_2d ( double r );
-    def circle_area_2d ( r ):
+    def circle_area_2d (self, r ):
         return lib.circle_area_2d(c_double(r))
 
 
     #void circle_dia2imp_2d ( double p1[2], double p2[2], double *r, double pc[2] );
-    def circle_dia2imp_2d ( p1, p2, r, pc ):
+    def circle_dia2imp_2d (self, p1, p2, r, pc ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cpc = (c_double * 2)(*pc)
@@ -770,7 +776,7 @@ class Geometry():
 
 
     #int circle_exp_contains_point_2d ( double p1[2], double p2[2], double p3[2], double p[2] );
-    def circle_exp_contains_point_2d ( p1, p2, p3, p ):
+    def circle_exp_contains_point_2d (self, p1, p2, p3, p ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p3)
@@ -778,7 +784,7 @@ class Geometry():
         return lib.circle_exp_contains_point_2d(cp1, cp2, cp3, cp)
 
     # void circle_exp2imp_2d ( double p1[2], double p2[2], double p3[2], double *r, double pc[2] );
-    def circle_exp2imp_2d ( p1, p2, p3, r, pc ):
+    def circle_exp2imp_2d (self, p1, p2, p3, r, pc ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p3)
@@ -789,14 +795,14 @@ class Geometry():
 
 
     # int circle_imp_contains_point_2d ( double r, double pc[2], double p[2] );
-    def circle_imp_contains_point_2d ( r, pc, p ):
+    def circle_imp_contains_point_2d (self, r, pc, p ):
         cpc = (c_double * 2)(*pc)
         cp = (c_double * 2)(*p)
         return lib.circle_imp_contains_point_2d(c_double(r), cpc, cp)
 
 
     # void circle_imp_line_par_int_2d ( double r, double pc[2], double x0, double y0, double f, double g, int *int_num, double p[] );
-    def circle_imp_line_par_int_2d ( r, pc, x0, y0, f, g, int_num, p ):
+    def circle_imp_line_par_int_2d (self, r, pc, x0, y0, f, g, int_num, p ):
         cpc = (c_double * 2)(*pc)
         pint_num = pointer(c_int(int_num))
         cp = (c_double * len(p))(*p)
@@ -804,21 +810,21 @@ class Geometry():
 
 
     # double circle_imp_point_dist_2d ( double r, double pc[2], double p[2]  );
-    def circle_imp_point_dist_2d ( r, pc, p ):
+    def circle_imp_point_dist_2d (self, r, pc, p ):
         cpc = (c_double * 2)(*pc)
         cp = (c_double * 2)(*p)
         return lib.circle_imp_point_dist_2d(c_double(r), cpc, cp)
 
 
     # double circle_imp_point_dist_signed_2d ( double r, double pc[2], double p[2] );
-    def circle_imp_point_dist_signed_2d ( r, pc, p ):
+    def circle_imp_point_dist_signed_2d (self, r, pc, p ):
         cpc = (c_double * 2)(*pc)
         cp = (c_double * 2)(*p)
         return lib.circle_imp_point_dist_signed_2d(c_double(r), cpc, cp)
 
 
     # double circle_imp_point_near_2d ( double r, double pc[2], double p[2], double pn[2] );
-    def circle_imp_point_near_2d ( r, pc, p, pn ):
+    def circle_imp_point_near_2d (self, r, pc, p, pn ):
         cpc = (c_double * 2)(*pc)
         cp = (c_double * 2)(*p)
         cpn = (c_double * 2)(*pn)
@@ -826,13 +832,13 @@ class Geometry():
 
 
     # double *circle_imp_points_2d ( double r, double pc[2], int n );
-    def circle_imp_points_2d ( r, pc, n ):
+    def circle_imp_points_2d (self, r, pc, n ):
         cpc = (c_double * 2)(*pc)
         return lib.circle_imp_points_2d(c_double(r), cpc, c_int(n)) 
 
 
     # double *circle_imp_points_3d ( double r, double pc[3], double nc[3], int n );
-    def circle_imp_points_3d ( r, pc, nc, n ):
+    def circle_imp_points_3d (self, r, pc, nc, n ):
         cpc = (c_double * 3)(*pc)
         cnc = (c_double * 3)(*nc)
         return lib.circle_imp_points_3d( c_double(r), cpc, cnc, c_int(n))
@@ -840,28 +846,28 @@ class Geometry():
 
 
     # void circle_imp_points_arc_2d ( double r, double pc[2], double theta1, double theta2, int n, double p[] );
-    def circle_imp_points_arc_2d ( r, pc, theta1, theta2, n, p ):
+    def circle_imp_points_arc_2d (self, r, pc, theta1, theta2, n, p ):
         cpc = (c_double * 2)(*pc)
         cp = (c_double * len(p))(*p)
         lib.circle_imp_points_arc_2d(c_double(r), cpc, c_double(theta1), c_double(theta2), c_int(n), cp)
      
 
     # void circle_imp_print_2d ( double r, double pc[2], char *title );
-    def circle_imp_print_2d ( r, pc, title ):
+    def circle_imp_print_2d (self, r, pc, title ):
         cpc = (c_double * 2)(*pc)
         ptitle = pointer(c_char(title))
         lib.circle_imp_print_2d(c_double(r), cpc, ptitle)
 
 
     # void circle_imp_print_3d ( double r, double pc[3], double nc[3], char *title );
-    def circle_imp_print_3d ( r, pc, nc, title ):
+    def circle_imp_print_3d (self, r, pc, nc, title ):
         cpc = (c_double * 3)(*pc)
         cnc = (c_double * 3)(*nc)
         ptitle = pointer(c_char(title))
         lib.circle_imp_print_2d(c_double(r), cpc, cnc, ptitle)
 
     # void circle_imp2exp_2d ( double r, double pc[2], double p1[2], double p2[2], double p3[2] );
-    def circle_imp2exp_2d ( r, pc, p1, p2, p3 ):
+    def circle_imp2exp_2d (self, r, pc, p1, p2, p3 ):
         cpc = (c_double * 2)(*pc)
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
@@ -869,7 +875,7 @@ class Geometry():
         lib.circle_imp2exp_2d(c_double(r), cpc, cp1, cp2, cp3)
 
     # double *circle_llr2imp_2d ( double p1[], double p2[], double q1[], double q2[], double r );
-    def circle_llr2imp_2d ( p1, p2, q1, q2, r ):
+    def circle_llr2imp_2d (self, p1, p2, q1, q2, r ):
         cp1 = (c_double * len(p1))(*p1)
         cp2 = (c_double * len(p2))(*p2)
         cq1 = (c_double * len(q1))(*q1)
@@ -877,19 +883,19 @@ class Geometry():
         return lib.circle_llr2imp_2d(cp1, cp2, cq1, cq2)
 
     # double circle_lune_area_2d ( double r, double pc[2], double theta1, double theta2 );
-    def circle_lune_area_2d ( r, pc, theta1, theta2 ):
+    def circle_lune_area_2d (self, r, pc, theta1, theta2 ):
         cpc = (c_double * 2)(*pc)
         return lib.circle_lune_area_2d(c_double(r), cpc, c_double(theta1), c_double(theta2))
         
 
     # double *circle_lune_centroid_2d ( double r, double pc[2], double theta1, double theta2 );
-    def circle_lune_centroid_2d ( r, pc, theta1, theta2 ):
+    def circle_lune_centroid_2d (self, r, pc, theta1, theta2 ):
         cpc = (c_double * 2)(*pc)
         return lib.circle_lune_centroid_2d(c_double(r), cpc, c_double(theta1), c_double(theta2) )
         
 
     # void circle_pppr2imp_3d ( double p1[], double p2[], double p3[], double r, double pc[], double normal[] );
-    def circle_pppr2imp_3d ( p1, p2, p3, r, pc, normal ):
+    def circle_pppr2imp_3d (self, p1, p2, p3, r, pc, normal ):
         cp1 = (c_double * len(p1))(*p1)
         cp2 = (c_double * len(p2))(*p2)
         cp3 = (c_double * len(p3))(*p3)
@@ -1500,12 +1506,46 @@ class Geometry():
     # void xyz_to_radec ( double p[3], double *ra, double *dec );
     # void xyz_to_rtp ( double xyz[3], double *r, double *theta, double *phi );
     # void xyz_to_tp ( double xyz[3], double *theta, double *phi );
+    def test_angle_box_2d(self):
+        dist = 1
+        p1 = [0,0]
+        p2 =[3,0]
+        p3 =[4,2]
+        p4 = []
+        p5 = []
+        self.angle_box_2d ( dist, p1, p2, p3, p4, p5 )
+        assert round(p4[0],6) == 2.381966
+        assert round(p4[1],6) == 1.000000
+        assert round(p5[0],6) == 3.618034
+        assert round(p5[1],6) == -1.000000
+        dist = 1
+        p1 = [0,0]
+        p2 =[3,0]
+        p3 =[2,-2]
+        p4 = []
+        p5 = []
+        self.angle_box_2d ( dist, p1, p2, p3, p4, p5 )
+        assert round(p4[0],6) == 3.618034
+        assert round(p4[1],6) == -1.000000
+        assert round(p5[0],6) == 2.381966
+        assert round(p5[1],6) == 1.000000
+        dist = 1
+        p1 = [3,0]
+        p2 =[3,0]
+        p3 =[2,-2]
+        p4 = []
+        p5 = []
+        self.angle_box_2d ( dist, p1, p2, p3, p4, p5 )
+        assert round(p4[0],6) == 2.105573
+        assert round(p4[1],6) == 0.447214
+        assert round(p5[0],6) == 3.894427
+        assert round(p5[1],6) == -0.447214
 
 
 
 
 
-def test(numtests):
+def testPerf(numtests):
     g = Geometry()
 
     toradians = 0.0174532925;
@@ -1517,28 +1557,37 @@ def test(numtests):
         g.polygon_contains_point_2d([0,0,0,4,4,4,4,0], [1,1])
 
 
-#test(1);
 
-# 2000 calls to a sphere_distance1
-# and 2000 calls to polygon_contains_point_2d
-# = 4000 calls total
-cProfile.run('test(2000)')      # ~0.062 seconds on 64bit fedora
+## 2000 calls to a sphere_distance1
+## and 2000 calls to polygon_contains_point_2d
+## = 4000 calls total
+#cProfile.run('testPerf(2000)')      # ~0.062 seconds on 64bit fedora
 
-# 20000 calls to a sphere_distance1
-# and 20000 calls to polygon_contains_point_2d
-# = 40000 calls total
-cProfile.run('test(20000)')     # ~0.603 seconds on 64bit fedora
+## 20000 calls to a sphere_distance1
+## and 20000 calls to polygon_contains_point_2d
+## = 40000 calls total
+#cProfile.run('testPerf(20000)')     # ~0.603 seconds on 64bit fedora
 
-# 30000 calls to a sphere_distance1
-# and 30000 calls to polygon_contains_point_2d
-# = 60000 calls total
-cProfile.run('test(30000)')     # ~0.905 seconds on 64bit fedora
+## 30000 calls to a sphere_distance1
+## and 30000 calls to polygon_contains_point_2d
+## = 60000 calls total
+#cProfile.run('testPerf(30000)')     # ~0.905 seconds on 64bit fedora
 
-# 40000 calls to a sphere_distance1
-# and 40000 calls to polygon_contains_point_2d
-# = 80000 calls total
-cProfile.run('test(40000)')     # ~1.198 seconds on 64bit fedora
-
+## 40000 calls to a sphere_distance1
+## and 40000 calls to polygon_contains_point_2d
+## = 80000 calls total
+#cProfile.run('testPerf(40000)')     # ~1.198 seconds on 64bit fedora
 
 
+
+
+
+
+
+
+def test():
+    g = Geometry()
+    g.test_angle_box_2d()
+
+test();
 

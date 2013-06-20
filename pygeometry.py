@@ -8,9 +8,9 @@ lib = cdll.LoadLibrary('./libgeometry.so')
 # Return types
 
 lib.angle_box_2d.restype = None
-lib.angle_contains_ray_2d.restype = c_int
+lib.angle_contains_ray_2d.restype = c_bool
 lib.angle_deg_2d.restype = c_double
-lib.angle_half_2d.restype = c_void_p # MLM: double *  
+lib.angle_half_2d.restype = c_void_p 
 lib.angle_rad_2d.restype = c_double
 lib.angle_rad_3d.restype = c_double
 lib.angle_rad_nd.restype = c_double
@@ -623,28 +623,32 @@ class Geometry():
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.angle_deg_2d ( p1, p2, p3 )
+        return lib.angle_deg_2d ( cp1, cp2, cp3 )
 
     # double *angle_half_2d ( double p1[2], double p2[2], double p3[2] );
     def angle_half_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.angle_half_2d( p1, p2, p3 )
+        pcp4 = pointer((c_double * 2)(lib.angle_half_2d( cp1, cp2, cp3 )))
+        cp4 = []
+        cp4.append(pcp4.contents[0])
+        cp4.append(pcp4.contents[1])
+        return cp4 
 
     # double angle_rad_2d ( double p1[2], double p2[2], double p3[2] );
     def angle_rad_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.angle_rad_2d( p1, p2, p3 )
+        return lib.angle_rad_2d( cp1, cp2, cp3 )
 
     # double angle_rad_3d ( double p1[3], double p2[3], double p3[3] );
     def angle_rad_3d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.angle_rad_3d( p1, p2, p3 )
+        return lib.angle_rad_3d( cp1, cp2, cp3 )
 
     # double angle_rad_nd ( int dim_num, double vec1[], double vec2[] );
     def angle_rad_nd (self,  dim_num, vec1, vec2 ):
@@ -657,21 +661,21 @@ class Geometry():
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.angle_turn_2d( p1, p2, p3 )
+        return lib.angle_turn_2d( cp1, cp2, cp3 )
 
     # double anglei_deg_2d ( double p1[2], double p2[2], double p3[2] );
     def anglei_deg_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.anglei_deg_2d( p1, p2, p3 )
+        return lib.anglei_deg_2d( cp1, cp2, cp3 )
 
     # double anglei_rad_2d ( double p1[2], double p2[2], double p3[2] );
     def anglei_rad_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp3 = (c_double * 2)(*p2)
-        return lib.angle_rad_2d( p1, p2, p3 )
+        return lib.anglei_rad_2d( cp1, cp2, cp3 )
 
     #double annulus_area_2d ( double r1, double r2 );
     def annulus_area_2d (self,  r1, r2 ):
@@ -1506,6 +1510,8 @@ class Geometry():
     # void xyz_to_radec ( double p[3], double *ra, double *dec );
     # void xyz_to_rtp ( double xyz[3], double *r, double *theta, double *phi );
     # void xyz_to_tp ( double xyz[3], double *theta, double *phi );
+
+    ########## TESTS ###########
     def test_angle_box_2d(self):
         dist = 1
         p1 = [0,0]
@@ -1542,8 +1548,45 @@ class Geometry():
         assert round(p5[1],6) == -0.447214
 
 
+    def test_angle_contains_ray_2d(self):
+        p1 = [1,0]
+        p2 =[0,0]
+        p3 =[1,1]
+        #( self, p1, p2, p3, p):
+        assert self.angle_contains_ray_2d(p1, p2, p3, [1,0]) == True
+        assert self.angle_contains_ray_2d(p1, p2, p3, [0.866025,0.5]) == True
+        assert self.angle_contains_ray_2d(p1, p2, p3, [0.5,0.866025]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [6.12323e-17,1]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [-0.5,0.866025]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [-0.866025,0.5]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [-1,1.22465e-16]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [-0.866025,-0.5]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [-0.5,-0.866025]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [-1.83697e-16,-1]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [0.5,-0.866025]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [0.866025,-0.5]) == False
+        assert self.angle_contains_ray_2d(p1, p2, p3, [1,-2.44929e-16]) == False
 
+    def test_angle_deg_2d (self):
+        print "Warning: angle_deg_2d is untested"
+        p1 = [-1,1]
+        p2 =[0,0]
+        p3 =[3,2]
+        print self.angle_deg_2d(p1, p2, p3)
 
+    def test_angle_half_2d (self):
+        print "Warning: angle_half_2d is untested"
+        p1 = [-1,1]
+        p2 =[0,0]
+        p3 =[3,2]
+        print self.angle_half_2d(p1,p2,p3)
+
+    def test_angle_rad_2d (self ):
+        print "Warning: angle_rad_2d is untested"
+        p1 = [-1,1]
+        p2 =[0,0]
+        p3 =[3,2]
+        print self.angle_rad_2d(p1, p2, p3)
 
 def testPerf(numtests):
     g = Geometry()
@@ -1588,6 +1631,10 @@ def testPerf(numtests):
 def test():
     g = Geometry()
     g.test_angle_box_2d()
+    g.test_angle_contains_ray_2d()
+    g.test_angle_deg_2d()
+    g.test_angle_half_2d()
+    g.test_angle_rad_2d()
 
 test();
 

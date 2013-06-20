@@ -622,14 +622,14 @@ class Geometry():
     def angle_deg_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp3 = (c_double * 2)(*p3)
         return lib.angle_deg_2d ( cp1, cp2, cp3 )
 
     # double *angle_half_2d ( double p1[2], double p2[2], double p3[2] );
     def angle_half_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp3 = (c_double * 2)(*p3)
         pcp4 = pointer((c_double * 2)(lib.angle_half_2d( cp1, cp2, cp3 )))
         cp4 = []
         cp4.append(pcp4.contents[0])
@@ -640,14 +640,14 @@ class Geometry():
     def angle_rad_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp3 = (c_double * 2)(*p3)
         return lib.angle_rad_2d( cp1, cp2, cp3 )
 
     # double angle_rad_3d ( double p1[3], double p2[3], double p3[3] );
     def angle_rad_3d (self,  p1, p2, p3 ):
-        cp1 = (c_double * 2)(*p1)
-        cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp1 = (c_double * 3)(*p1)
+        cp2 = (c_double * 3)(*p2)
+        cp3 = (c_double * 3)(*p3)
         return lib.angle_rad_3d( cp1, cp2, cp3 )
 
     # double angle_rad_nd ( int dim_num, double vec1[], double vec2[] );
@@ -660,21 +660,21 @@ class Geometry():
     def angle_turn_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp3 = (c_double * 2)(*p3)
         return lib.angle_turn_2d( cp1, cp2, cp3 )
 
     # double anglei_deg_2d ( double p1[2], double p2[2], double p3[2] );
     def anglei_deg_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp3 = (c_double * 2)(*p3)
         return lib.anglei_deg_2d( cp1, cp2, cp3 )
 
     # double anglei_rad_2d ( double p1[2], double p2[2], double p3[2] );
     def anglei_rad_2d (self,  p1, p2, p3 ):
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
-        cp3 = (c_double * 2)(*p2)
+        cp3 = (c_double * 2)(*p3)
         return lib.anglei_rad_2d( cp1, cp2, cp3 )
 
     #double annulus_area_2d ( double r1, double r2 );
@@ -1581,12 +1581,34 @@ class Geometry():
         p3 =[3,2]
         print self.angle_half_2d(p1,p2,p3)
 
-    def test_angle_rad_2d (self ):
+    def test_angle_rad_2d (self):
         print "Warning: angle_rad_2d is untested"
         p1 = [-1,1]
         p2 =[0,0]
         p3 =[3,2]
         print self.angle_rad_2d(p1, p2, p3)
+
+    # double angle_rad_3d ( double p1[3], double p2[3], double p3[3] );
+    def test_angle_rad_3d (self):
+        print "Warning: angle_rad_3d is untested"
+        p1 = [-1,5,10]
+        p2 =[0,0,0]
+        p3 =[3,2,1]
+        print self.angle_rad_3d(p1,p2,p3)
+
+    def test_angle_rad_nd(self):
+        print "Warning: angle_rad_nd is untested"
+        p1 = [-1,1,0]
+        p2 =[0,0,0]
+        print self.angle_rad_nd(3,p1,p2)
+
+    # double angle_turn_2d ( double p1[2], double p2[2], double p3[2] );
+    def test_angle_turn_2d (self):
+        print "Warning: angle_turn_2d is untested"
+        p1 = [-1,1]
+        p2 =[0,0]
+        p3 =[3,2]
+        print self.angle_turn_2d(p1,p2,p3)
 
 def testPerf(numtests):
     g = Geometry()
@@ -1635,6 +1657,9 @@ def test():
     g.test_angle_deg_2d()
     g.test_angle_half_2d()
     g.test_angle_rad_2d()
+    g.test_angle_rad_3d()
+    g.test_angle_rad_nd()
+    g.test_angle_turn_2d()
 
 test();
 

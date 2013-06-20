@@ -688,15 +688,30 @@ class Geometry():
     # double *annulus_sector_centroid_2d ( double pc[2], double r1, double r2, double theta1, double theta2 );
     def annulus_sector_centroid_2d (self,  pc, r1, r2, theta1, theta2 ):
         cpc = (c_double * 2)(*pc)
-        return lib.annulus_sector_centroid_2d(self, cpc, c_double(r1), c_double(r2), c_double(theta1), c_double(theta2))
+        pcp4 = pointer((c_double * 2)(lib.annulus_sector_centroid_2d(cpc, c_double(r1), c_double(r2), c_double(theta1), c_double(theta2))))
+        cp4 = []
+        cp4.append(pcp4.contents[0])
+        cp4.append(pcp4.contents[1])
+        return cp4
 
     # double *ball_unit_sample_2d ( int *seed );
     def ball_unit_sample_2d (self, seed ):
-        return lib.ball_unit_sample_2d(c_int_p(seed))
+        pseed = pointer(c_int(seed))
+        pcp4 = pointer((c_double * 2)(lib.ball_unit_sample_2d(pseed)))
+        cp4 = []
+        cp4.append(pcp4.contents[0])
+        cp4.append(pcp4.contents[1])
+        return cp4
 
     # double *ball_unit_sample_3d ( int *seed );
     def ball_unit_sample_3d (self, seed ):
-        return lib.ball_unit_sample_3d(c_int_p(seed))
+        pseed = pointer(c_int(seed))
+        pcp4 = pointer((c_double * 3)(lib.ball_unit_sample_3d(pseed)))
+        cp4 = []
+        cp4.append(pcp4.contents[0])
+        cp4.append(pcp4.contents[1])
+        cp4.append(pcp4.contents[2])
+        return cp4
 
     # double *ball_unit_sample_nd ( int dim_num, int *seed );
     def ball_unit_sample_nd (self, dim_num, seed ):
@@ -1634,6 +1649,23 @@ class Geometry():
         print "Warning: annulus_sector_area_2d is untested"
         print self.annulus_sector_area_2d(0.1,0.5,0.3,0.4)
 
+
+    def test_annulus_sector_centroid_2d (self):
+        print "Warning: annulus_sector_centroid_2d is untested"
+        pc = [1,1]
+        print self.annulus_sector_centroid_2d(pc, 0.3, 0.5, 0.8, 0.9);
+
+    def test_ball_unit_sample_2d (self):
+        print "Warning: ball_unit_sample_2d is untested"
+        pseed = 38
+        print self.ball_unit_sample_2d(pseed)
+
+    def test_ball_unit_sample_3d (self):
+        print "Warning: ball_unit_sample_3d is untested"
+        pseed = 38
+        print self.ball_unit_sample_3d(pseed)
+
+
 def testPerf(numtests):
     g = Geometry()
 
@@ -1688,6 +1720,9 @@ def test():
     g.test_anglei_rad_2d()
     g.test_annulus_area_2d()
     g.test_annulus_sector_area_2d()
+    g.test_annulus_sector_centroid_2d()
+    g.test_ball_unit_sample_2d()
+    g.test_ball_unit_sample_3d()
 
 test();
 

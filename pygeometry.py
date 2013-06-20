@@ -1610,6 +1610,30 @@ class Geometry():
         p3 =[3,2]
         print self.angle_turn_2d(p1,p2,p3)
 
+    # double anglei_deg_2d ( double p1[2], double p2[2], double p3[2] );
+    def test_anglei_deg_2d (self):
+        print "Warning: anglei_deg_2d is untested"
+        p1 = [-1,1]
+        p2 =[0,0]
+        p3 =[3,2]
+        print self.anglei_deg_2d(p1,p2,p3)
+
+    # double anglei_rad_2d ( double p1[2], double p2[2], double p3[2] );
+    def test_anglei_rad_2d (self):
+        print "Warning: anglei_rad_2d is untested"
+        p1 = [-1,1]
+        p2 =[0,0]
+        p3 =[3,2]
+        print self.anglei_rad_2d(p1,p2,p3)
+
+    def test_annulus_area_2d (self):
+        print "Warning: annulus_area_2d is untested"
+        print self.annulus_area_2d(0.1,0.5)
+
+    def test_annulus_sector_area_2d(self ):
+        print "Warning: annulus_sector_area_2d is untested"
+        print self.annulus_sector_area_2d(0.1,0.5,0.3,0.4)
+
 def testPerf(numtests):
     g = Geometry()
 
@@ -1660,6 +1684,10 @@ def test():
     g.test_angle_rad_3d()
     g.test_angle_rad_nd()
     g.test_angle_turn_2d()
+    g.test_anglei_deg_2d()
+    g.test_anglei_rad_2d()
+    g.test_annulus_area_2d()
+    g.test_annulus_sector_area_2d()
 
 test();
 

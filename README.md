@@ -3,6 +3,28 @@ PyGEOMETRY
 
 Python Geometry Library
 
+Currently implements the following functions:
+    angle_box_2d
+    angle_contains_ray_2d
+    angle_deg_2d
+    angle_half_2d
+    angle_rad_2d
+    angle_rad_3d
+    angle_rad_nd
+    angle_turn_2d
+    anglei_deg_2d
+    anglei_rad_2d
+    annulus_area_2d
+    annulus_sector_area_2d
+    annulus_sector_centroid_2d
+    ball_unit_sample_2d
+    ball_unit_sample_3d
+    polygon_contains_point_2d
+    polygon_contains_point_2d_2
+    sphere_distance1
+    sphere_distance2
+    sphere_distance3
+
 Python bridge to this excellent library: 
 
 http://people.sc.fsu.edu/~jburkardt/c_src/geometry/geometry.html

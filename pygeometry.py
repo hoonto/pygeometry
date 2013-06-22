@@ -25,7 +25,7 @@ lib.ball_unit_sample_3d.restype = c_void_p # MLM: double *
 lib.ball_unit_sample_nd.restype = c_void_p # MLM; double *
 lib.basis_map_3d.restype = c_void_p #double *
 lib.box_01_contains_point_2d.restype = c_bool 
-lib.box_01_contains_point_nd.restype = c_int
+lib.box_01_contains_point_nd.restype = c_bool
 lib.box_contains_point_2d.restype = c_int 
 lib.box_contains_point_nd.restype = c_int 
 lib.box_ray_int_2d.restype = None  
@@ -1705,6 +1705,11 @@ class Geometry():
         p2 =[4,3]
         print self.box_01_contains_point_2d (p2)
 
+    def test_box_01_contains_point_nd (self):
+        print "Warning: box_01_contains_point_nd is untested"
+        p2 = [3,4,5,6]
+        print self.box_01_contains_point_nd (4,p2)
+
             
 
     def test_circle_ppr2imp_2d(self):
@@ -1774,6 +1779,8 @@ def test():
     g.test_ball_unit_sample_nd ()
     g.test_basis_map_3d ()
     g.test_box_01_contains_point_2d ()
+    g.test_box_01_contains_point_nd ()
+
     g.test_circle_ppr2imp_2d()
 
 test();

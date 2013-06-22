@@ -22,6 +22,7 @@ Currently contains the following functions:
 * ball_unit_sample_3d
 * ball_unit_sample_nd
 * basis_map_3d
+* box_01_contains_point_2d
 * polygon_contains_point_2d
 * polygon_contains_point_2d_2
 * sphere_distance1

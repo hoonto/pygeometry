@@ -24,6 +24,8 @@ Currently contains the following functions:
 * basis_map_3d
 * box_01_contains_point_2d
 * box_01_contains_point_nd
+* box_contains_point_2d
+* box_contains_point_nd
 * polygon_contains_point_2d
 * polygon_contains_point_2d_2
 * sphere_distance1

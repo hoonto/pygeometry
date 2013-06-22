@@ -26,8 +26,8 @@ lib.ball_unit_sample_nd.restype = c_void_p # MLM; double *
 lib.basis_map_3d.restype = c_void_p #double *
 lib.box_01_contains_point_2d.restype = c_bool 
 lib.box_01_contains_point_nd.restype = c_bool
-lib.box_contains_point_2d.restype = c_int 
-lib.box_contains_point_nd.restype = c_int 
+lib.box_contains_point_2d.restype = c_bool 
+lib.box_contains_point_nd.restype = c_bool 
 lib.box_ray_int_2d.restype = None  
 lib.box_segment_clip_2d.restype = c_int 
 lib.circle_arc_point_near_2d.restype =  None
@@ -753,7 +753,7 @@ class Geometry():
         cp1 = (c_double * 2)(*p1)
         cp2 = (c_double * 2)(*p2)
         cp = (c_double * 2)(*p)
-        return lib.box_contains_point_2d( p1, p2, p )
+        return lib.box_contains_point_2d( cp1, cp2, cp )
 
     # int box_contains_point_nd ( int dim_num, double p1[], double p2[], double p[] );
     def box_contains_point_nd (self, dim_num, p1, p2, p ):
@@ -1710,7 +1710,19 @@ class Geometry():
         p2 = [3,4,5,6]
         print self.box_01_contains_point_nd (4,p2)
 
-            
+    def test_box_contains_point_2d (self):
+        print "Warning: box_contains_point_2d is untested"
+        p1 = [1,3]
+        p2 = [3,4]
+        p3 = [5,6]
+        print self.box_contains_point_2d (p1,p2,p3)
+
+    def test_box_contains_point_nd (self):
+        print "Warning: box_contains_point_nd is untested"
+        p1 = [1,3,5]
+        p2 = [3,4,2]
+        p3 = [5,6,8]
+        print self.box_contains_point_nd (3,p1,p2,p3)
 
     def test_circle_ppr2imp_2d(self):
         print "Warning: circle_ppr2imp_2d is untested"
@@ -1780,6 +1792,8 @@ def test():
     g.test_basis_map_3d ()
     g.test_box_01_contains_point_2d ()
     g.test_box_01_contains_point_nd ()
+    g.test_box_contains_point_2d ()
+    g.test_box_contains_point_nd ()
 
     g.test_circle_ppr2imp_2d()
 

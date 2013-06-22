@@ -51,7 +51,7 @@ lib.circle_lune_area_2d.restype = c_double
 lib.circle_lune_centroid_2d.restype = c_void_p # MLM; double *
 lib.circle_pppr2imp_3d.restype = None  
 
-#lib.circle_ppr2imp_2d.restype = c_void_p # MLM; double *
+lib.circle_ppr2imp_2d.restype = c_void_p # MLM; double *
 #lib.circle_sector_area_2d.restype = c_double 
 #lib.circle_sector_centroid_2d.restype = c_void_p #double *
 #lib.circle_sector_contains_point_2d.restype = c_int 
@@ -715,13 +715,27 @@ class Geometry():
 
     # double *ball_unit_sample_nd ( int dim_num, int *seed );
     def ball_unit_sample_nd (self, dim_num, seed ):
-        return lib.ball_unit_sample_nd(c_int(dim_num), c_int_p(seed))
+        pseed = pointer(c_int(seed))
+        pcp4 = lib.ball_unit_sample_nd(dim_num,pseed)
+        cp4 = [dim_num]
+        if tpcp4 != None:
+            pcp4 = pointer((c_double * dim_num)(pcp4))
+            for i in xrange(dim_num):
+                cp4.append(pcp4.contents[i])
+        return cp4
 
     # double *basis_map_3d ( double u[3*3], double v[3*3] );
     def basis_map_3d (self, u, v ):
-        cu = (c_double * 3*3)(*u)
-        cv = (c_double * 3*3)(*v)
-        return lib.basis_map_3d(cu, cv)
+        dim_num = 9
+        cu = (c_double * dim_num)(*u)
+        cv = (c_double * dim_num)(*v)
+        tpcp4 = lib.basis_map_3d(cu,cv)
+        cp4 = [dim_num]
+        if tpcp4 != None:
+            pcp4 = pointer((c_double * dim_num)(tpcp4))
+            for i in xrange(dim_num):
+                cp4.append(pcp4.contents[i])
+        return cp4
 
     # int box_01_contains_point_2d ( double p[2] );
     def box_01_contains_point_2d (self, p ):
@@ -922,9 +936,19 @@ class Geometry():
         cnormal = (c_double * len(normal))(*normal)
         return lib.circle_pppr2imp_3d(cp1, cp2, cp3, c_double(r), cpc, cnormal)
         
-
-
     # double *circle_ppr2imp_2d ( double p1[], double p2[], double r );
+    def circle_ppr2imp_2d ( self, p1, p2, r ):
+        cp1 = (c_double * len(p1))(*p1)
+        cp2 = (c_double * len(p2))(*p2)
+        pcp4 = pointer((c_double * 4)(lib.circle_ppr2imp_2d(cp1, cp2, c_double(r))))
+        cp4 = []
+        cp4.append(pcp4.contents[0])
+        cp4.append(pcp4.contents[1])
+        cp4.append(pcp4.contents[2])
+        cp4.append(pcp4.contents[3])
+        return cp4
+
+
 
     # double circle_sector_area_2d ( double r, double pc[2], double theta1, double theta2 );
 
@@ -1665,6 +1689,23 @@ class Geometry():
         pseed = 38
         print self.ball_unit_sample_3d(pseed)
 
+    def test_ball_unit_sample_nd (self):
+        print "Warning: ball_unit_sample_nd is untested"
+        seed = 38
+        print self.ball_unit_sample_nd(4,seed)
+
+    def test_basis_map_3d (self):
+        print "Warning: basis_map_3d is untested"
+        u = [1,2,3,4,5,6]
+        v = [6,5,4,3,2,1]
+        print self.basis_map_3d(u,v)
+
+    def test_circle_ppr2imp_2d(self):
+        print "Warning: circle_ppr2imp_2d is untested"
+        p1 = [3,3]
+        p2 = [5,5]
+        r = 5
+        print self.circle_ppr2imp_2d(p1, p2, r)
 
 def testPerf(numtests):
     g = Geometry()
@@ -1723,6 +1764,10 @@ def test():
     g.test_annulus_sector_centroid_2d()
     g.test_ball_unit_sample_2d()
     g.test_ball_unit_sample_3d()
+    g.test_ball_unit_sample_nd ()
+    g.test_basis_map_3d ()
+
+    g.test_circle_ppr2imp_2d()
 
 test();
 

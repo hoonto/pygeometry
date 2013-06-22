@@ -3,7 +3,8 @@ PyGEOMETRY
 
 Python Geometry Library
 
-Currently implements the following functions:
+Currently contains the following functions:
+
 * angle_box_2d
 * angle_contains_ray_2d
 * angle_deg_2d
@@ -19,6 +20,8 @@ Currently implements the following functions:
 * annulus_sector_centroid_2d
 * ball_unit_sample_2d
 * ball_unit_sample_3d
+* ball_unit_sample_nd
+* basis_map_3d
 * polygon_contains_point_2d
 * polygon_contains_point_2d_2
 * sphere_distance1
